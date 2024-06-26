@@ -9,6 +9,9 @@ CFLAGS ?= -g -O0 -Wall -Wextra -W -Wno-sign-compare -Wno-unused-parameter
 CPPFLAGS += -DSHARE_INSTDIR="\"$(SHARE_INSTDIR)\""
 LDFLAGS ?=
 
+PREFIX ?= /usr/local
+MANDIR ?= $(PREFIX)/share/man
+
 # Normally minipro is installed to /usr/local.  If you want to put it
 # somewhere else, define that location here.
 PREFIX ?= /usr/local
@@ -93,7 +96,8 @@ ifneq ($(OS),Windows_NT)
 else
 # Add Windows libs here
 override LIBS += -lsetupapi \
-                 -lwinusb
+                 -lwinusb \
+                 -lshlwapi
 endif
 
 
@@ -136,6 +140,7 @@ distclean: clean
 	rm -rf $(DIST_DIR)*
 
 install:
+ifneq ($(OS),Windows_NT)
 	mkdir -p $(BIN_INSTDIR)
 	mkdir -p $(MAN_INSTDIR)
 	mkdir -p $(SHARE_INSTDIR)
@@ -153,8 +158,16 @@ install:
 		mkdir -p $(COMPLETIONS_INSTDIR); \
 		cp bash_completion.d/minipro $(COMPLETIONS_INSTDIR)/; \
 	fi
+else
+	mkdir build
+	cp $(MINIPRO) build/
+	cp $(INFOIC) build/
+	cp $(LOGICIC) build/
+
+endif
 
 uninstall:
+ifneq ($(OS),Windows_NT)
 	rm -f $(BIN_INSTDIR)/$(MINIPRO)
 	rm -f $(SHARE_INSTDIR)/$(INFOIC)
 	rm -f $(SHARE_INSTDIR)/$(LOGICIC)
@@ -163,6 +176,9 @@ uninstall:
 	if [ -n "$(UDEV_DIR)" ]; then rm -f $(UDEV_RULES_INSTDIR)/61-minipro-plugdev.rules; fi
 	if [ -n "$(UDEV_DIR)" ]; then rm -f $(UDEV_RULES_INSTDIR)/61-minipro-uaccess.rules; fi
 	if [ -n "$(COMPLETIONS_DIR)" ]; then rm -f $(COMPLETIONS_INSTDIR)/minipro; fi
+else
+	rm -rf build
+endif
 
 install_library:
 	mkdir -p $(LIB_INSTDIR)

@@ -1086,22 +1086,10 @@ static FILE *get_database_file(const char *name, const char *cli_name)
 #ifdef _WIN32
 
 	char path[MAX_PATH];
-	char appdata[MAX_PATH];
 
-	/* Avoid buffer overruns and keep to maximum lengths */
-	SHGetSpecialFolderPathA(NULL, appdata, CSIDL_COMMON_APPDATA, 0);
-	int count =
-		snprintf(path, sizeof(path), "%s\\minipro\\%s", appdata, name);
-
-	/* C99 and Windows (before Windows 10) differ in semantics.
-	 * Check both cases.
-	 */
-	if (count < 0 || count >= sizeof(path)) {
-		fprintf(stderr, "Path %s\\minipro\\%s is too long.\n", appdata,
-			name);
-		return NULL;
-	}
-	path[sizeof(path) - 1] = '\0'; /* Not needed now, but it can't hurt! */
+	GetModuleFileName(NULL, path, MAX_PATH);
+	PathRemoveFileSpec(path);
+	snprintf(path, sizeof(path), "%s\\%s", path, name);
 
 #else
 
