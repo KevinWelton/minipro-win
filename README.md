@@ -1,4 +1,33 @@
 # minipro
+
+# This is a clone of https://gitlab.com/DavidGriffith/minipro. It has some small changes to work on Windows with the config files living side-by-side the executable instead of in %ProgramData%.
+
+I have the following environment that allowed me to build without too
+much trouble. I'm not claiming this is the best or only way, it isn't.
+But it worked for me since I already had the config.
+* make (https://github.com/maweil/MakeForWindows/releases). Must be in PATH.
+* Strawberry perl (https://strawberryperl.com/). Provides gcc.
+* Git bash (https://git-scm.com/). Add the following to `~/.bash_profile` so we use the right perl.exe:
+```
+# Use Strawberry perl, not the builtin perl.
+export PATH=/c/Strawberry/perl/bin:$PATH
+```
+
+At this point, you can go to your repo folder in a git bash shell and build via `make`.
+
+Once the build is complete, run `make install` and it will place the artifacts in a folder named `build`. With the changes in this fork, you can keep the xml files right beside the exe.
+
+_Note:_ Some online sources have had success with cygwin. I didn't find it necessary.
+With the solution I'm using, you don't need the cygwin dll dependency.
+
+## What I'm using it for
+I am using minipro to program my T48 with an AT28C256 as part of BenEater's 6502 project (https://eater.net/6502.) I highly recommend this project. BenEater is a great teacher. If possible, buy the kits directly from him.
+
+## ISSUES
+When I program my AT28C256 on the T48, I get an error when verifying... but the chip seems to have been programmed just fine. At least the program I flashed it with runs. For transparency though, I am a n00b with EEPROMs. So it's possible that somethings wrong that just didn't manifest when I ran the code I flashed.
+
+# Hereafter is the readme as it exists in the original repository. I will keep it up to date if I end up merging at a later time.
+
 ## Latest "stable" version 0.7
 
 An open source program for controlling the MiniPRO TL866xx series of
