@@ -24,7 +24,8 @@ With the solution I'm using, you don't need the cygwin dll dependency.
 I am using minipro to program my T48 with an AT28C256 as part of BenEater's 6502 project (https://eater.net/6502.) I highly recommend this project. BenEater is a great teacher. If possible, buy the kits directly from him.
 
 ## ISSUES
-When I program my AT28C256 on the T48, I get an error when verifying... but the chip seems to have been programmed just fine. At least the program I flashed it with runs. For transparency though, I am a n00b with EEPROMs. So it's possible that somethings wrong that just didn't manifest when I ran the code I flashed.
+* When I program my AT28C256 on the T48, I get an error when verifying... but the chip seems to have been programmed just fine. At least the program I flashed it with runs. For transparency though, I am a n00b with EEPROMs. So it's possible that somethings wrong that just didn't manifest when I ran the code I flashed. I didn not get a verify error on mac when using minipro via `brew install`.
+* I had to flash my T48 with the latest firmware before minipro would recognize it on Windows. When I used the mac build via `brew install`, I didn't need to do this.
 
 # Hereafter is the readme as it exists in the original repository. I will keep it up to date if I end up merging at a later time.
 
